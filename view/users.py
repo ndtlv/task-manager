@@ -17,7 +17,7 @@ class Users(Resource):
         db.session.add(user)
         db.session.flush()
         id_ = user.id
-        emit_object_creation({"name": dash.name, "type": "user"})
+        emit_object_creation({"name": user.name, "type": "user"})
         db.session.commit()
         return {'id': id_}, 201
 
