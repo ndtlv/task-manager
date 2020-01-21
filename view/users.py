@@ -4,6 +4,7 @@ from flask_restful import Resource
 from models import Dashboard, User, serialize_multiple
 from utils.validator import ModelValidator
 from settings import db
+from services import emit_object_creation
 
 
 class Users(Resource):
@@ -16,6 +17,7 @@ class Users(Resource):
         db.session.add(user)
         db.session.flush()
         id_ = user.id
+        emit_object_creation({"name": dash.name, "type": "user"})
         db.session.commit()
         return {'id': id_}, 201
 
