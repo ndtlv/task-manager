@@ -4,6 +4,7 @@ from flask_restful import Resource
 from models import Dashboard, User, Task
 from utils.validator import ModelValidator
 from settings import db
+from services import emit_object_creation
 
 
 class DashboardTasks(Resource):
@@ -21,6 +22,7 @@ class DashboardTasks(Resource):
             db.session.add(task)
             db.session.flush()
             id = task.id
+            emit_object_creation({"name": dash.name, "type": "task"})
             dash.tasks.append(task)
             db.session.commit()
 
