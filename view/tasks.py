@@ -22,7 +22,7 @@ class DashboardTasks(Resource):
             db.session.add(task)
             db.session.flush()
             id = task.id
-            emit_object_creation({"name": dash.name, "type": "task"})
+            emit_object_creation({"name": task.name, "type": "task"})
             dash.tasks.append(task)
             db.session.commit()
 
