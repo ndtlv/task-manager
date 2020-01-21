@@ -3,6 +3,7 @@ from flask_restful import Resource
 
 from models import Dashboard, User, serialize_multiple, Task, Comment
 from settings import db
+from services import emit_object_creation
 
 
 class TaskComments(Resource):
@@ -21,6 +22,7 @@ class TaskComments(Resource):
             db.session.add(com)
             db.session.flush()
             id = com.id
+            emit_object_creation({"name": com.body, "type": "comment"})
             db.session.commit()
 
             return {'id': id}, 201
